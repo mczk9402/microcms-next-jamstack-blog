@@ -149,6 +149,7 @@ const Contact = () => {
             className="overflow-hidden pb-[12px] resize-none"
             style={{ minHeight: height + 'px' }}
             wrap="hard"
+            rows="5"
             onChange={(e) => handleTextArea(e)}
           />
           {errors.body && (

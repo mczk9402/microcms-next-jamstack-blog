@@ -4,10 +4,20 @@ import { PostList } from 'components/PostList';
 import { Pagination } from 'components/Pagination';
 import { Layout } from 'components/Layout';
 import { Heading1, Heading2 } from 'components/Heading';
+import { useContext, useEffect } from 'react';
+import { GlobalContext } from 'context/global';
 
 export default function Home({ blog, totalCount, siteInfo }) {
-  console.log(blog, totalCount, siteInfo);
+  // console.log(blog, totalCount, siteInfo);
   const { title, description, mainVisual } = siteInfo;
+
+  // const { globalState, setGlobalState } = useContext(GlobalContext);
+  // useEffect(() => {
+  //   if (globalState.siteInfo) {
+  //     setGlobalState({ type: 'SET_SITE_INFO', payload: { siteInfo } });
+  //   }
+  // }, []);
+
   // slice(どこから,どこまで)を返す
   const latestBlog = blog.slice(0, 8);
 

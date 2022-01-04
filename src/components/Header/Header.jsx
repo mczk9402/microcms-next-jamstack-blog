@@ -4,27 +4,33 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useContext, useEffect } from 'react';
 import { useState } from 'react';
+import { GlobalContext } from 'context/global';
 
 export const Header = () => {
   const [open, setOpen] = useState(false);
-  const [siteInfo, setSiteInfo] = useState({});
-  const getSiteInfo = async () => {
-    const siteInfo = await client.get({
-      endpoint: 'site-info',
-      contentId: '6261l8lvlwwa',
-    });
-    setSiteInfo(siteInfo);
-  };
+  const {
+    globalState: { siteInfo },
+    setGlobalState,
+  } = useContext(GlobalContext);
 
   useEffect(() => {
-    getSiteInfo();
+    if (!Object.keys(siteInfo).length) {
+      client
+        .get({
+          endpoint: 'site-info',
+          contentId: '6261l8lvlwwa',
+        })
+        .then((res) => {
+          setGlobalState({ type: 'SET_SITE_INFO', payload: { siteInfo: res } });
+        });
+    }
   }, []);
 
   return (
     <header className="fixed top-0 z-10 w-screen h-[64px] bg-black/[0.85]">
       <div className="flex justify-between items-center mx-auto max-w-[960px] h-full text-white">
         <Link href="/">
-          <a className="grid grid-flow-col gap-[16px] items-center">
+          <a className="grid relative grid-flow-col gap-[16px] items-center">
             {siteInfo.profileImage ? (
               <Image
                 src={siteInfo.profileImage.url}
