@@ -1,0 +1,9 @@
+.item {
+  @apply h-[557px];
+  &:nth-child(n + 6) {
+    @apply col-span-full h-[204px];
+  }
+}
+.imageWrapper {
+  height: 100%;
+}

@@ -1,10 +1,11 @@
+import { Layout } from 'components/Layout';
 import React from 'react';
 
 const Custom404 = () => {
   return (
-    <main className="main">
-      <p>ページがありません。</p>
-    </main>
+    <Layout>
+      <p>ページがありません</p>
+    </Layout>
   );
 };
 
