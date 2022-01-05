@@ -24,6 +24,7 @@ export const Header = () => {
           setGlobalState({ type: 'SET_SITE_INFO', payload: { siteInfo: res } });
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
