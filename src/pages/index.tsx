@@ -1,15 +1,40 @@
-import Head from 'next/head';
 import { client } from 'pages/api/client';
 import { PostList } from 'components/PostList';
 import { Pagination } from 'components/Pagination';
 import { Layout } from 'components/Layout';
 import { Heading1, Heading2 } from 'components/Heading';
-import { useContext, useEffect } from 'react';
-import { GlobalContext } from 'context/global';
-import { Seo } from '../components/Seo/Seo';
+import { VFC } from 'react';
 
-export default function Home({ blog, totalCount, siteInfo }) {
-  // console.log(blog, totalCount, siteInfo);
+interface StaticProps {
+  blog: [
+    {
+      body: string;
+      category: string | null;
+      createdAt: string;
+      dev: {};
+      id: string;
+      publishedAt: string;
+      revisedAt: string;
+      title: string;
+      updatedAt: string;
+    }
+  ];
+  totalCount: number;
+  siteInfo: {
+    createdAt: string;
+    description: string;
+    id: string;
+    mainVisual: {};
+    profileImage: {};
+    profileName: string;
+    publishedAt: string;
+    revisedAt: string;
+    title: string;
+    updatedAt: string;
+  };
+}
+
+const Home: VFC<StaticProps> = ({ blog, totalCount, siteInfo }) => {
   const { title, description, mainVisual } = siteInfo;
   // slice(どこから,どこまで)を返す
   const latestBlog = blog.slice(0, 8);
@@ -22,7 +47,9 @@ export default function Home({ blog, totalCount, siteInfo }) {
       <Pagination totalCount={totalCount} />
     </Layout>
   );
-}
+};
+
+export default Home;
 
 // データをテンプレートに受け渡す部分の処理を記述します
 export const getStaticProps = async () => {

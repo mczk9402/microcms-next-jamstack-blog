@@ -1,9 +1,15 @@
 import { Header } from 'components/Header';
 import { MainVisual } from 'components/MainVisual';
 import { Seo } from 'components/Seo';
-import React from 'react';
+import React, { VFC } from 'react';
 
-export const Layout = ({ children, mainVisual, pageTitle }) => {
+interface Props {
+  pageTitle?: string;
+  mainVisual?: {};
+  children: any;
+}
+
+export const Layout: VFC<Props> = ({ children, mainVisual, pageTitle }) => {
   return (
     <>
       <Seo pageTitle={pageTitle} />

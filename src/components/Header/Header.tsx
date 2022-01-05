@@ -2,11 +2,11 @@ import { HeaderModal } from 'components/HeaderModal';
 import { client } from 'pages/api/client';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, VFC } from 'react';
 import { useState } from 'react';
 import { GlobalContext } from 'context/global';
 
-export const Header = () => {
+export const Header: VFC = () => {
   const [open, setOpen] = useState(false);
   const {
     globalState: { siteInfo },
@@ -14,7 +14,7 @@ export const Header = () => {
   } = useContext(GlobalContext);
 
   useEffect(() => {
-    if (!Object.keys(siteInfo).length) {
+    if (!siteInfo.profileImage.url) {
       client
         .get({
           endpoint: 'site-info',
@@ -24,6 +24,7 @@ export const Header = () => {
           setGlobalState({ type: 'SET_SITE_INFO', payload: { siteInfo: res } });
         });
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -32,7 +33,7 @@ export const Header = () => {
       <div className="flex justify-between items-center mx-auto max-w-[960px] h-full text-white">
         <Link href="/">
           <a className="grid relative grid-flow-col gap-[16px] items-center">
-            {siteInfo.profileImage ? (
+            {siteInfo.profileImage.url ? (
               <Image
                 src={siteInfo.profileImage.url}
                 className="rounded-full"
