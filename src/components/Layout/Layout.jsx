@@ -1,10 +1,12 @@
-import { Header } from 'components/Header/Header';
+import { Header } from 'components/Header';
 import { MainVisual } from 'components/MainVisual';
+import { Seo } from 'components/Seo';
 import React from 'react';
 
-export const Layout = ({ children, mainVisual }) => {
+export const Layout = ({ children, mainVisual, pageTitle }) => {
   return (
     <>
+      <Seo pageTitle={pageTitle} />
       <Header />
       <div className="py-[64px]">
         {mainVisual ? <MainVisual mainVisual={mainVisual} /> : null}

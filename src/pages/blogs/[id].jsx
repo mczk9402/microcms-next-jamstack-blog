@@ -6,9 +6,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function BlogId({ blog, prev, next }) {
-  console.log(blog);
   return (
-    <Layout mainVisual={blog.eyecatch}>
+    <Layout pageTitle={blog.title} mainVisual={blog.eyecatch}>
       <Heading1 title={blog.title} description={blog.publishedAt} />
       <p>{blog.category ? `${blog.category.categoryName}` : null}</p>
       <article
@@ -73,11 +72,6 @@ export const getStaticProps = async (context) => {
   const prev = otherArticle.contents[articleIndex + 1];
   const next = otherArticle.contents[articleIndex - 1];
 
-  const siteInfo = await client.get({
-    endpoint: 'site-info',
-    contentId: '6261l8lvlwwa',
-  });
-
   return {
     props: {
       blog: data,
@@ -85,7 +79,6 @@ export const getStaticProps = async (context) => {
       articleIndex,
       prev: prev ? prev : null,
       next: next ? next : null,
-      siteInfo,
     },
   };
 };

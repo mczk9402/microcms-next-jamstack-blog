@@ -64,7 +64,7 @@ const Contact = () => {
 
   if (complete) {
     return (
-      <Layout>
+      <Layout pageTitle="お問い合わせ完了">
         <Heading1 title={'お問い合わせ完了'} description={'お問い合わせが完了しました'} />
         <div className="flex justify-center">
           <Link href="/">
@@ -82,7 +82,7 @@ const Contact = () => {
   if (confirm) {
     console.log(contact);
     return (
-      <Layout>
+      <Layout pageTitle="お問い合わせ確認">
         <Heading1 title={'お問い合わせ確認'} description={'お問い合わせ内容の確認です'} />
         <div className="grid gap-[16px]">
           <div className="grid gap-[8px]">
@@ -126,7 +126,7 @@ const Contact = () => {
   }
 
   return (
-    <Layout>
+    <Layout pageTitle="お問い合わせ">
       <Heading1 title={'お問い合わせ'} description={'お気軽にお問い合わせください'} />
       <form className="grid gap-[16px]" onSubmit={handleSubmit(onSubmit)}>
         <InputWrapper label="お名前">

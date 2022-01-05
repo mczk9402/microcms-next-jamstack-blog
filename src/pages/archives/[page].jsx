@@ -10,7 +10,7 @@ export default function Archive({ blog, totalCount, currentPage }) {
   const currentArticles = blog.slice(-10 + 10 * currentPage, 0 + 10 * currentPage);
 
   return (
-    <Layout>
+    <Layout pageTitle={`アーカイブ - ${currentPage}ページ`}>
       <Heading1 title={'アーカイブ'} description={'過去の記事一覧'} />
       <ArchiveList archives={currentArticles} />
       <Pagination totalCount={totalCount} currentPage={currentPage} />

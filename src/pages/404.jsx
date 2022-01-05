@@ -3,7 +3,7 @@ import React from 'react';
 
 const Custom404 = () => {
   return (
-    <Layout>
+    <Layout pageTitle="404">
       <p>ページがありません</p>
     </Layout>
   );
