@@ -1,8 +1,11 @@
 import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Link from 'next/link';
+import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
+import { SearchIcon } from '@chakra-ui/icons';
 
 export const HeaderModal = ({ open, setOpen }) => {
+  const [search, setSearch] = useState('');
   const cancelButtonRef = useRef(null);
 
   return (
@@ -40,7 +43,15 @@ export const HeaderModal = ({ open, setOpen }) => {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="inline-block overflow-hidden relative p-[30px] h-[600px] text-left text-white align-bottom bg-black/70 rounded-lg shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:align-middle">
-              <ul>
+              <ul className="grid gap-[16px]">
+                <li>
+                  <InputGroup>
+                    <InputLeftElement pointerEvents="none">
+                      <SearchIcon color="gray.300" />
+                    </InputLeftElement>
+                    <Input type="tel" placeholder="記事検索" />
+                  </InputGroup>
+                </li>
                 <li>
                   <Link href="/">
                     <a>TOP</a>
