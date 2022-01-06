@@ -45,10 +45,6 @@ interface Props {
   };
 }
 
-// type Props = InferGetStaticPropsType<typeof getStaticProps>;
-
-// : GetStaticProps<Props>
-// データをテンプレートに受け渡す部分の処理を記述します
 export const getStaticProps = async ({ params }: Props) => {
   const data = await client.get({
     endpoint: 'test',
