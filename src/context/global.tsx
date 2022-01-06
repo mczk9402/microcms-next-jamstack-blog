@@ -1,4 +1,25 @@
-import React, { createContext, useReducer, useState } from 'react';
+import React, { createContext, useReducer, ReactNode, VFC, Dispatch } from 'react';
+
+interface SiteInfo {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  revisedAt: string;
+  title: string;
+  description: string;
+  mainVisual: {
+    url: string;
+    height: number;
+    width: number;
+  };
+  profileName: string;
+  profileImage: {
+    url: string;
+    height: number;
+    width: number;
+  };
+}
 
 interface InitialState {
   siteInfo: {
@@ -22,6 +43,32 @@ interface InitialState {
     };
   };
   hoge: {};
+}
+
+interface Action {
+  type: string;
+  payload: {
+    siteInfo: {
+      id: string;
+      createdAt: string;
+      updatedAt: string;
+      publishedAt: string;
+      revisedAt: string;
+      title: string;
+      description: string;
+      mainVisual: {
+        url: string;
+        height: number;
+        width: number;
+      };
+      profileName: string;
+      profileImage: {
+        url: string;
+        height: number;
+        width: number;
+      };
+    };
+  };
 }
 
 const initialState: InitialState = {
@@ -48,7 +95,7 @@ const initialState: InitialState = {
   hoge: {},
 };
 
-const reducer = (state, action) => {
+const reducer = (state: InitialState, action: Action) => {
   switch (action.type) {
     case 'SET_SITE_INFO':
       return { ...state, siteInfo: action.payload.siteInfo };
@@ -57,15 +104,25 @@ const reducer = (state, action) => {
   }
 };
 
+interface GlobalContext {
+  globalState: InitialState;
+  setGlobalState: Dispatch<Action>;
+}
+
+// setGlobalState({ type: 'SET_SITE_INFO', payload: { siteInfo: res } });
 export const GlobalContext = createContext({
   globalState: initialState,
-  setGlobalState: ({}) => null,
+  setGlobalState: ({}: any): void => {},
 });
 
-export const GlobalProvider = ({ children }) => {
+interface Props {
+  children: ReactNode;
+}
+
+export const GlobalProvider: VFC<Props> = ({ children }) => {
   const [globalState, setGlobalState] = useReducer(reducer, initialState);
   return (
-    <GlobalContext.Provider value={{ globalState, setGlobalState }}>
+    <GlobalContext.Provider value={{ globalState: globalState, setGlobalState: setGlobalState }}>
       {children}
     </GlobalContext.Provider>
   );

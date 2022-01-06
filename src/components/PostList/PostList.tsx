@@ -1,8 +1,34 @@
-import React from 'react';
+import React, { VFC } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export const PostList = ({ blog }) => {
+interface Props {
+  blog: {
+    body: string;
+    category: string | null;
+    createdAt: string;
+    dev: {
+      dev2?: {
+        height: 0;
+        url: string;
+        width: number;
+      };
+      dev3?: string;
+    } | null;
+    eyecatch: {
+      height: 0;
+      url: string;
+      width: 0;
+    };
+    id: string;
+    publishedAt: string;
+    revisedAt: string;
+    title: string;
+    updatedAt: string;
+  }[];
+}
+
+export const PostList: VFC<Props> = ({ blog }) => {
   return (
     <ul className="grid grid-cols-2 gap-[16px] items-start">
       {blog.map((blog, index) => (

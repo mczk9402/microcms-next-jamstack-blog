@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { VFC } from 'react';
 import Image from 'next/image';
 
-export const MainVisual = ({ mainVisual }) => {
+interface Props {
+  mainVisual: {
+    url: string;
+  };
+}
+
+export const MainVisual: VFC<Props> = ({ mainVisual }) => {
   return (
     <div className="sticky top-[64px] mx-auto max-w-[960px] h-[480px]">
       <Image

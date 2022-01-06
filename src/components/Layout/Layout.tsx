@@ -5,11 +5,13 @@ import React, { VFC } from 'react';
 
 interface Props {
   pageTitle?: string;
-  mainVisual?: {};
+  mainVisual?: {
+    url: string;
+  };
   children: any;
 }
 
-export const Layout: VFC<Props> = ({ children, mainVisual, pageTitle }) => {
+export const Layout: VFC<Props> = ({ children, mainVisual, pageTitle = '' }) => {
   return (
     <>
       <Seo pageTitle={pageTitle} />

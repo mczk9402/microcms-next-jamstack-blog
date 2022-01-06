@@ -6,25 +6,37 @@ import { Heading1, Heading2 } from 'components/Heading';
 import { VFC } from 'react';
 
 interface StaticProps {
-  blog: [
-    {
-      body: string;
-      category: string | null;
-      createdAt: string;
-      dev: {};
-      id: string;
-      publishedAt: string;
-      revisedAt: string;
-      title: string;
-      updatedAt: string;
-    }
-  ];
+  blog: {
+    body: string;
+    category: string | null;
+    createdAt: string;
+    dev: {
+      dev2?: {
+        height: 0;
+        url: string;
+        width: number;
+      };
+      dev3?: string;
+    } | null;
+    eyecatch: {
+      height: 0;
+      url: string;
+      width: 0;
+    };
+    id: string;
+    publishedAt: string;
+    revisedAt: string;
+    title: string;
+    updatedAt: string;
+  }[];
   totalCount: number;
   siteInfo: {
     createdAt: string;
     description: string;
     id: string;
-    mainVisual: {};
+    mainVisual: {
+      url: string;
+    };
     profileImage: {};
     profileName: string;
     publishedAt: string;
@@ -35,6 +47,8 @@ interface StaticProps {
 }
 
 const Home: VFC<StaticProps> = ({ blog, totalCount, siteInfo }) => {
+  console.log(blog);
+
   const { title, description, mainVisual } = siteInfo;
   // slice(どこから,どこまで)を返す
   const latestBlog = blog.slice(0, 8);

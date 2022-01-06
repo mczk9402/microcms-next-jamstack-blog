@@ -4,8 +4,59 @@ import { Layout } from 'components/Layout';
 import { client } from 'pages/api/client';
 import Link from 'next/link';
 import Image from 'next/image';
+import { NextPage } from 'next';
 
-export default function BlogId({ blog, prev, next }) {
+interface TestBlog {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  revisedAt: string;
+  title: string;
+  body: string;
+  category: {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    revisedAt: string;
+    categoryName: string;
+  };
+  eyecatch: {
+    url: string;
+    height: number;
+    width: number;
+  };
+  dev: {
+    fieldId: string;
+    dev: string;
+    dev2: {
+      url: string;
+      height: number;
+      width: number;
+    };
+    dev3: string;
+  } | null;
+}
+
+interface PrevNext {
+  id: string;
+}
+
+interface GetTest {
+  contents: TestBlog[];
+  totalCount: number;
+  offset: number;
+  limit: number;
+}
+
+interface Props {
+  blog: TestBlog;
+  prev: PrevNext;
+  next: PrevNext;
+}
+
+const BlogId: NextPage<Props> = ({ blog, prev, next }) => {
   return (
     <Layout pageTitle={blog.title} mainVisual={blog.eyecatch}>
       <Heading1 title={blog.title} description={blog.publishedAt} />
@@ -40,18 +91,20 @@ export default function BlogId({ blog, prev, next }) {
       ) : null}
     </Layout>
   );
-}
+};
+
+export default BlogId;
 
 // 静的生成のためのパスを指定します
 export const getStaticPaths = async () => {
-  const data = await client.get({ endpoint: 'test' });
+  const data: GetTest = await client.get({ endpoint: 'test' });
   const paths = data.contents.map((content) => `/blogs/${content.id}`);
 
   return { paths, fallback: false };
 };
 
 // データをテンプレートに受け渡す部分の処理を記述します
-export const getStaticProps = async (context) => {
+export const getStaticProps = async (context: any) => {
   const id = context.params.id;
   const data = await client.get({
     endpoint: 'test',
@@ -60,7 +113,7 @@ export const getStaticProps = async (context) => {
 
   // 一つ前 / 一つ後ろのコンテンツはどのように取得すれば良いですか？
   // http://help.microcms.io/ja/knowledge/get-previous-or-next
-  const otherArticle = await client.get({
+  const otherArticle: GetTest = await client.get({
     endpoint: 'test',
     queries: {
       limit: 100,

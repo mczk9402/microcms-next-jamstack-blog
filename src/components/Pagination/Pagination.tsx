@@ -1,14 +1,20 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
+import { VFC } from 'react';
 
-export const Pagination = ({ currentPage = 1, totalCount }) => {
+interface Props {
+  currentPage?: number;
+  totalCount: number;
+}
+
+export const Pagination: VFC<Props> = ({ currentPage = 1, totalCount }) => {
   const currentStyle =
     'inline-flex relative z-10 items-center py-2 px-4 text-sm font-medium text-indigo-600 bg-indigo-50 border border-indigo-500';
   const defaultStyle =
     'inline-flex relative items-center py-2 px-4 text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 border border-gray-300';
 
-  const currentNum = parseInt(currentPage);
+  const currentNum = currentPage;
 
   return (
     <nav
@@ -51,9 +57,3 @@ export const Pagination = ({ currentPage = 1, totalCount }) => {
     </nav>
   );
 };
-
-{
-  /* <span className="inline-flex relative items-center py-2 px-4 text-sm font-medium text-gray-700 bg-white border border-gray-300">
-...
-</span> */
-}

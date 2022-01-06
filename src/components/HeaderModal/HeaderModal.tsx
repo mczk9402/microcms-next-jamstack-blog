@@ -1,10 +1,15 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useRef, useState, VFC } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 
-export const HeaderModal = ({ open, setOpen }) => {
+interface Props {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const HeaderModal: VFC<Props> = ({ open, setOpen }) => {
   const [search, setSearch] = useState('');
   const cancelButtonRef = useRef(null);
 

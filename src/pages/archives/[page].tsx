@@ -3,10 +3,19 @@ import { ArchiveList } from 'components/ArchiveList';
 import { Heading1 } from 'components/Heading';
 import { Layout } from 'components/Layout';
 import { Pagination } from 'components/Pagination';
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import { client } from 'pages/api/client';
+import { TestContent } from 'Types/TestContent';
+import { TypeOf } from 'yup';
+
+interface Props {
+  blog: TestContent[];
+  totalCount: number;
+  currentPage: number;
+}
 
 // https://ji23-dev.com/blogs/next-jamstack-paging
-export default function Archive({ blog, totalCount, currentPage }) {
+const Archive: NextPage<Props> = ({ blog, totalCount, currentPage }) => {
   const currentArticles = blog.slice(-10 + 10 * currentPage, 0 + 10 * currentPage);
 
   return (
@@ -16,7 +25,8 @@ export default function Archive({ blog, totalCount, currentPage }) {
       <Pagination totalCount={totalCount} currentPage={currentPage} />
     </Layout>
   );
-}
+};
+export default Archive;
 
 // 静的生成のためのパスを指定します
 export const getStaticPaths = async () => {
@@ -28,9 +38,17 @@ export const getStaticPaths = async () => {
   return { paths, fallback: false };
 };
 
+interface Props {
+  params: {
+    page: number;
+  };
+}
+
+// type Props = InferGetStaticPropsType<typeof getStaticProps>;
+
+// : GetStaticProps<Props>
 // データをテンプレートに受け渡す部分の処理を記述します
-export const getStaticProps = async (context) => {
-  const id = context.params;
+export const getStaticProps = async ({ params }: Props) => {
   const data = await client.get({
     endpoint: 'test',
     queries: {
@@ -42,7 +60,7 @@ export const getStaticProps = async (context) => {
     props: {
       blog: data.contents,
       totalCount: data.totalCount,
-      currentPage: context.params.page,
+      currentPage: params?.page,
     },
   };
 };

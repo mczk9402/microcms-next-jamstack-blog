@@ -1,7 +1,11 @@
 import Head from 'next/head';
-import React from 'react';
+import React, { VFC } from 'react';
 
-export const Seo = ({ pageTitle }) => {
+interface Props {
+  pageTitle: string;
+}
+
+export const Seo: VFC<Props> = ({ pageTitle }) => {
   const defaultTitle = 'テストブログ';
   const title = pageTitle ? `${pageTitle} | ${defaultTitle}` : defaultTitle;
 

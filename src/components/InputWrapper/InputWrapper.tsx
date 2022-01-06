@@ -1,6 +1,12 @@
-import React from 'react';
+import { StringifyOptions } from 'querystring';
+import React, { VFC } from 'react';
 
-export const InputWrapper = ({ label, children }) => {
+interface Props {
+  label: string;
+  children: any;
+}
+
+export const InputWrapper: VFC<Props> = ({ label, children }) => {
   return (
     <div className="grid gap-[8px] ">
       <span className="font-bold">{label}</span>

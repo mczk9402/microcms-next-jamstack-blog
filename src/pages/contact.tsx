@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { Input, Textarea, Button } from '@chakra-ui/react';
 import { Layout } from 'components/Layout';
 import { Heading1 } from 'components/Heading';
@@ -23,13 +23,15 @@ const schema = yup.object({
 const Contact = () => {
   const [confirm, setConfirm] = useState(false);
   const [complete, setComplete] = useState(false);
-  const [contact, setContact] = useState({});
+  const [contact, setContact] = useState({
+    name: '',
+    email: '',
+    body: '',
+  });
 
   const {
     register,
     handleSubmit,
-    watch,
-    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -40,7 +42,11 @@ const Contact = () => {
     },
   });
 
-  const onSubmit = async (data) => {
+  type OnSubmit = (data: { name: string; email: string; body: string }) => void;
+
+  const onSubmit: OnSubmit = async (data) => {
+    console.log(data);
+
     setConfirm(true);
     setContact(data);
   };
@@ -49,7 +55,7 @@ const Contact = () => {
     await axios.post('https://mczk9402.microcms.io/api/v1/contact', contact, {
       headers: {
         'Content-Type': 'application/json',
-        'X-MICROCMS-API-KEY': process.env.NEXT_PUBLIC_API_KEY,
+        'X-MICROCMS-API-KEY': process.env.NEXT_PUBLIC_API_KEY!,
       },
     });
   };
@@ -57,7 +63,8 @@ const Contact = () => {
   const [rows, setRows] = useState(5);
   const [height, setHeight] = useState(0);
 
-  const handleTextArea = (e) => {
+  // https://zenn.dev/koduki/articles/0f8fcbc9a7485b
+  const handleTextArea = (e: { target: HTMLElement }) => {
     console.log(e.target.scrollHeight, e.target.offsetHeight);
     setHeight(e.target.scrollHeight);
   };
@@ -80,7 +87,6 @@ const Contact = () => {
   }
 
   if (confirm) {
-    console.log(contact);
     return (
       <Layout pageTitle="お問い合わせ確認">
         <Heading1 title={'お問い合わせ確認'} description={'お問い合わせ内容の確認です'} />
@@ -149,7 +155,7 @@ const Contact = () => {
             className="overflow-hidden pb-[12px] resize-none"
             style={{ minHeight: height + 'px' }}
             wrap="hard"
-            rows="5"
+            rows={5}
             onChange={(e) => handleTextArea(e)}
           />
           {errors.body && (

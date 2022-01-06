@@ -1,11 +1,37 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { VFC } from 'react';
 
-export const ArchiveList = ({ archives }) => {
+interface CurrentArticle {
+  body: string;
+  category?: string;
+  createdAt: string;
+  dev?: string;
+  dev2?: {
+    url: string;
+    height: number;
+    width: number;
+  };
+  dev3?: string;
+  fieldId: string;
+  eyecatch?: {
+    height: 0;
+    url: string;
+    width: 0;
+  };
+  id: string;
+  publishedAt: string;
+  revisedAt: string;
+  title: string;
+  updatedAt: string;
+}
+
+export const ArchiveList: VFC<any> = ({ archives }) => {
+  console.log(archives);
+
   return (
     <ul>
-      {archives.map((archive, index) => (
+      {archives.map((archive: CurrentArticle, index: React.Key) => (
         <li className="border-b border-[#ccc]" key={index}>
           <Link href={`/blogs/${archive.id}`}>
             <a className="flex justify-between py-[16px]">
