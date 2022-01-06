@@ -4,6 +4,7 @@ import { Heading1 } from 'components/Heading';
 import { Layout } from 'components/Layout';
 import { Pagination } from 'components/Pagination';
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
+import { Params } from 'next/dist/server/router';
 import { client } from 'pages/api/client';
 import { TestContent } from 'Types/TestContent';
 import { TypeOf } from 'yup';
@@ -40,7 +41,7 @@ export const getStaticPaths = async () => {
 
 interface Props {
   params: {
-    page: number;
+    page: string;
   };
 }
 
@@ -60,7 +61,7 @@ export const getStaticProps = async ({ params }: Props) => {
     props: {
       blog: data.contents,
       totalCount: data.totalCount,
-      currentPage: params?.page,
+      currentPage: parseInt(params?.page),
     },
   };
 };

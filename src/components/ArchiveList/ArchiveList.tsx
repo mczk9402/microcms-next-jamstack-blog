@@ -27,8 +27,6 @@ interface CurrentArticle {
 }
 
 export const ArchiveList: VFC<any> = ({ archives }) => {
-  console.log(archives);
-
   return (
     <ul>
       {archives.map((archive: CurrentArticle, index: React.Key) => (
