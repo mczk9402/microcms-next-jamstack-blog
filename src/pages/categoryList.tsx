@@ -1,4 +1,5 @@
-import { Button } from '@chakra-ui/react';
+import { CloseIcon, SearchIcon } from '@chakra-ui/icons';
+import { Button, Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
 import { Heading1 } from 'components/Heading';
 import { Layout } from 'components/Layout';
 import { NextPage } from 'next';
@@ -26,36 +27,66 @@ interface Props {
 
 const CategoryList: NextPage<Props> = ({ categories, blogs }) => {
   const [currentCategory, setCurrentCategory] = useState('');
+  const [search, setSearch] = useState('');
+
   const title = currentCategory === '' ? 'カテゴリー' : currentCategory;
   console.log(blogs);
 
   return (
     <Layout>
       <Heading1 title={`${title}一覧`} description={'カテゴリーを選択してください'} />
-      <ul className="flex gap-[4px]">
-        {categories.map((category, index) => (
-          <li key={index}>
-            <Button
-              colorScheme="teal"
-              variant={category.name === currentCategory ? 'solid' : 'outline'}
-              onClick={() => setCurrentCategory(category.name)}
-            >
-              {category.name}
+      <div className="grid gap-[16px]">
+        <InputGroup>
+          <InputLeftElement pointerEvents="none">
+            <SearchIcon color="gray.300" />
+          </InputLeftElement>
+          <Input
+            placeholder="記事検索"
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+          />
+        </InputGroup>
+        <ul className="flex gap-[4px]">
+          {categories.map((category, index) => (
+            <li key={index}>
+              <Button
+                colorScheme="teal"
+                variant={category.name === currentCategory ? 'solid' : 'outline'}
+                onClick={() => setCurrentCategory(category.name)}
+              >
+                {category.name}
+              </Button>
+            </li>
+          ))}
+          <li>
+            <Button colorScheme="teal" variant="outline" onClick={() => setCurrentCategory('')}>
+              <CloseIcon />
             </Button>
           </li>
-        ))}
-      </ul>
-      <ul className="mt-[32px]">
-        {blogs.map((blog, index) =>
-          blog.category?.name === currentCategory ? (
-            <li className="border-t border-black first:border-none" key={index}>
-              <Link href={`/blogs/${blog.id}`}>
-                <a className="block py-[16px]">{blog.title}</a>
-              </Link>
-            </li>
-          ) : null
-        )}
-      </ul>
+        </ul>
+        <ul>
+          {blogs.map((blog, index) =>
+            blog.category?.name === currentCategory ? (
+              <li className="border-t border-black first:border-none" key={index}>
+                <Link href={`/blogs/${blog.id}`}>
+                  <a className="block py-[16px]">{blog.title}</a>
+                </Link>
+              </li>
+            ) : null
+          )}
+        </ul>
+        <ul>
+          {blogs.map((blog, index) =>
+            ~blog.title.indexOf(search) && '' != search ? (
+              <li className="border-t border-black first:border-none" key={index}>
+                <Link href={`/blogs/${blog.id}`}>
+                  <a className="block py-[16px]">{blog.title}</a>
+                </Link>
+              </li>
+            ) : null
+          )}
+        </ul>
+      </div>
     </Layout>
   );
 };

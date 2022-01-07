@@ -50,14 +50,6 @@ export const HeaderModal: VFC<Props> = ({ open, setOpen }) => {
             <div className="inline-block overflow-hidden relative p-[30px] h-[600px] text-left text-white align-bottom bg-black/70 rounded-lg shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:align-middle">
               <ul className="grid gap-[16px]">
                 <li>
-                  <InputGroup>
-                    <InputLeftElement pointerEvents="none">
-                      <SearchIcon color="gray.300" />
-                    </InputLeftElement>
-                    <Input type="tel" placeholder="記事検索" />
-                  </InputGroup>
-                </li>
-                <li>
                   <Link href="/">
                     <a>TOP</a>
                   </Link>
