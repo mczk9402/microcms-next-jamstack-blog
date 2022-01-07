@@ -21,14 +21,16 @@ export const Pagination: VFC<Props> = ({ currentPage = 1, totalCount }) => {
       className="flex relative z-0 justify-center mt-[40px] -space-x-px w-full rounded-md"
       aria-label="Pagination"
     >
-      {currentNum - 1 > 0 ? (
-        <Link href={`/archives/${currentNum - 1}`}>
-          <a className="inline-flex relative items-center py-2 px-2 text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 rounded-l-md border border-gray-300">
-            <span className="sr-only">Previous</span>
-            <ChevronLeftIcon className="w-5 h-5" aria-hidden="true" />
-          </a>
-        </Link>
-      ) : null}
+      <Link href={`/archives/${currentNum - 1}`}>
+        <a
+          className={`inline-flex relative items-center py-2 px-2 text-sm font-medium text-gray-500  hover:bg-gray-50 rounded-l-md  border-gray-300 ${
+            currentNum - 1 > 0 ? 'bg-white border' : 'pointer-events-none bg-gray-200 opacity-50'
+          }`}
+        >
+          <span className="sr-only">Previous</span>
+          <ChevronLeftIcon className="w-5 h-5" aria-hidden="true" />
+        </a>
+      </Link>
 
       {[...Array(Math.ceil(totalCount / 10))]
         .map((_, i) => i + 1)
@@ -43,17 +45,18 @@ export const Pagination: VFC<Props> = ({ currentPage = 1, totalCount }) => {
           </Link>
         ))}
 
-      {currentNum < Math.ceil(totalCount / 10) ? (
-        <Link href={`/archives/${currentNum + 1}`}>
-          <a
-            href="#"
-            className="inline-flex relative items-center py-2 px-2 text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 rounded-r-md border border-gray-300"
-          >
-            <span className="sr-only">Next</span>
-            <ChevronRightIcon className="w-5 h-5" aria-hidden="true" />
-          </a>
-        </Link>
-      ) : null}
+      <Link href={`/archives/${currentNum + 1}`}>
+        <a
+          className={`inline-flex relative items-center py-2 px-2 text-sm font-medium text-gray-500  hover:bg-gray-50 rounded-r-md  border-gray-300 ${
+            currentNum < Math.ceil(totalCount / 10)
+              ? 'bg-white border'
+              : 'pointer-events-none bg-gray-200 opacity-50'
+          }`}
+        >
+          <span className="sr-only">Next</span>
+          <ChevronRightIcon className="w-5 h-5" aria-hidden="true" />
+        </a>
+      </Link>
     </nav>
   );
 };
