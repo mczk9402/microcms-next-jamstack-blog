@@ -69,6 +69,11 @@ export const HeaderModal: VFC<Props> = ({ open, setOpen }) => {
                     <a>カテゴリー一覧</a>
                   </Link>
                 </li>
+                <li>
+                  <Link href="/image-list">
+                    <a>スライダー検証</a>
+                  </Link>
+                </li>
               </ul>
             </div>
           </Transition.Child>
