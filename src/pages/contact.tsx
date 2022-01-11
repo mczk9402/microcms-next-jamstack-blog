@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Link from 'next/link';
 import axios from 'axios';
+import { init, send } from 'emailjs-com';
 
 // 【Formik/Yup】React簡単フォーム作成ライブラリ解説
 // https://suwaru.tokyo/%E3%80%90formik-yup%E3%80%91react%E7%B0%A1%E5%8D%98%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0%E4%BD%9C%E6%88%90%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E8%A7%A3%E8%AA%AC/
@@ -52,11 +53,28 @@ const Contact = () => {
   };
 
   const onComplete = async () => {
-    await axios.post('https://mczk9402.microcms.io/api/v1/contact', contact, {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-MICROCMS-API-KEY': process.env.NEXT_PUBLIC_API_KEY!,
-      },
+    // await axios.post('https://mczk9402.microcms.io/api/v1/contact', contact, {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'X-MICROCMS-API-KEY': process.env.NEXT_PUBLIC_API_KEY!,
+    //   },
+    // });
+
+    // https://zenn.dev/azunasu/articles/3a49cc1a8c6839
+    const userID = process.env.NEXT_PUBLIC_USER_ID;
+    const serviceID = process.env.NEXT_PUBLIC_SERVICE_ID;
+    const templateID = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+
+    const sendParams = {
+      name: contact.name,
+      email: contact.email,
+      body: contact.body,
+    };
+
+    init(userID!);
+
+    send(serviceID!, templateID!, sendParams).then(() => {
+      alert('送信完了');
     });
   };
 
