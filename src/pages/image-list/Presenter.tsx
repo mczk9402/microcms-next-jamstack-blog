@@ -2,29 +2,9 @@ import next, { NextPage } from 'next';
 import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 
-import SwiperCore, {
-  Navigation,
-  Pagination,
-  Scrollbar,
-  A11y,
-  Virtual,
-  Controller,
-  EffectFade,
-  Autoplay,
-} from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-SwiperCore.use([Navigation, EffectFade, Autoplay]);
-
-// Import Swiper styles
-// import 'swiper/css';
-// import 'swiper/css/navigation';
-// import 'swiper/css/pagination';
-// import 'swiper/css/scrollbar';
-
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import { Layout } from 'components/Layout';
-// import 'slick-carousel/slick/slick-theme.css';
 
 interface Props {
   data:
