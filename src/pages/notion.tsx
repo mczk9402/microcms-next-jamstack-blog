@@ -1,7 +1,6 @@
 import React from 'react';
 import { Client } from '@notionhq/client';
 import Image from 'next/image';
-import useSWR from 'swr';
 
 const Notion = ({ post, info }: any) => {
   const dotsStyle =
