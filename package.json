@@ -17,6 +17,7 @@
     "@hookform/resolvers": "^2.8.5",
     "@mui/material": "^5.2.6",
     "@mui/styled-engine-sc": "^5.1.0",
+    "@notionhq/client": "^0.4.12",
     "@types/react-slick": "^0.23.8",
     "axios": "^0.24.0",
     "emailjs-com": "^3.2.0",
