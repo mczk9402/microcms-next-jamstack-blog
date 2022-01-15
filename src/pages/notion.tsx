@@ -1,6 +1,7 @@
 import React from 'react';
 import { Client } from '@notionhq/client';
 import Image from 'next/image';
+import useSWR from 'swr';
 
 const Notion = ({ post, info }: any) => {
   const dotsStyle =
@@ -145,7 +146,30 @@ const Notion = ({ post, info }: any) => {
 export default Notion;
 
 // https://zenn.dev/5t111111/articles/80934cdda55328
-export const getStaticProps = async () => {
+// export const getStaticProps = async () => {
+//   const notion = new Client({
+//     auth: process.env.NOTION_TOKEN,
+//   });
+
+//   const pageInfo = await notion.pages.retrieve({
+//     page_id: process.env.NOTION_PAGE_ID as string,
+//   });
+
+//   const blocks = await notion.blocks.children.list({
+//     block_id: process.env.NOTION_PAGE_ID as string,
+//   });
+
+//   console.log(process.env.NOTION_TOKEN);
+
+//   return {
+//     props: {
+//       info: pageInfo,
+//       post: blocks.results,
+//     },
+//   };
+// };
+
+export const getServerSideProps = async () => {
   const notion = new Client({
     auth: process.env.NOTION_TOKEN,
   });
