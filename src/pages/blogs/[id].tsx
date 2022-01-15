@@ -96,7 +96,7 @@ const BlogId: NextPage<Props> = ({ blog, prev, next }) => {
 export default BlogId;
 
 // 静的生成のためのパスを指定します
-export const getStaticPaths = async () => {
+export const getServerSideProps = async () => {
   const data: GetTest = await client.get({ endpoint: 'test' });
   const paths = data.contents.map((content) => `/blogs/${content.id}`);
 
