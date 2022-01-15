@@ -6,11 +6,9 @@ const Notion = ({ post, info }: any) => {
   const dotsStyle =
     'repeating-linear-gradient(0deg,rgba(242,242,242,0.25) 0px 1px, transparent 1px 2px),repeating-linear-gradient(90deg,rgba(242,242,242,0.25) 0px 1px, transparent 1px 2px)';
 
-  // console.log(process.env.NOTION_TOKEN);
-
   return (
     <div>
-      <div className="grid relative justify-center items-center w-full h-[316rem] bg-[#111]/[0.25]">
+      <div className="grid relative justify-center items-center w-full h-[316px] bg-[#111]/[0.25]">
         {info.cover ? (
           <Image
             src={info.cover.external.url}
@@ -24,61 +22,61 @@ const Notion = ({ post, info }: any) => {
           style={{ backgroundImage: dotsStyle }}
         ></div>
         <div className="grid relative justify-items-center text-[#fff]">
-          <h1 className="text-[50rem] font-bold">{info.properties.title.title[0].plain_text}</h1>
-          <div className="grid grid-flow-col gap-[16rem]">
+          <h1 className="text-[50px] font-bold">{info.properties.title.title[0].plain_text}</h1>
+          <div className="grid grid-flow-col gap-[16px]">
             {[
               { label: '作成日', text: info.created_time },
               { label: '更新日', text: info.last_edited_time },
             ].map((item, index) => (
-              <span className="text-[14rem] font-bold" key={index}>
+              <span className="text-[14px] font-bold" key={index}>
                 {item.label} : {item.text}
               </span>
             ))}
           </div>
         </div>
       </div>
-      <article className="grid gap-[16rem] py-[64rem] mx-auto max-w-[620rem]">
+      <article className="grid gap-[16px] py-[64px] mx-auto max-w-[620px]">
         {post.map((block: any, blockIndex: number) => {
           switch (block.type) {
             case 'heading_1':
               return (
-                <h1 className="text-[40rem] font-bold" key={blockIndex}>
+                <h1 className="text-[40px] font-bold" key={blockIndex}>
                   {block.heading_1.text[0]?.plain_text || null}
                 </h1>
               );
             case 'heading_2':
               return (
-                <h2 className="text-[36rem] font-bold" key={blockIndex}>
+                <h2 className="text-[36px] font-bold" key={blockIndex}>
                   {block.heading_2.text[0]?.plain_text || null}
                 </h2>
               );
             case 'heading_3':
               return (
-                <h3 className="text-[32rem] font-bold" key={blockIndex}>
+                <h3 className="text-[32px] font-bold" key={blockIndex}>
                   {block.heading_3.text[0]?.plain_text || null}
                 </h3>
               );
             case 'heading_4':
               return (
-                <h4 className="text-[28rem] font-bold" key={blockIndex}>
+                <h4 className="text-[28px] font-bold" key={blockIndex}>
                   {block.heading_4.text[0]?.plain_text || null}
                 </h4>
               );
             case 'heading_5':
               return (
-                <h5 className="text-[24rem] font-bold" key={blockIndex}>
+                <h5 className="text-[24px] font-bold" key={blockIndex}>
                   {block.heading_5.text[0]?.plain_text || null}
                 </h5>
               );
             case 'heading_6':
               return (
-                <h6 className="text-[20rem] font-bold" key={blockIndex}>
+                <h6 className="text-[20px] font-bold" key={blockIndex}>
                   {block.heading_6.text[0]?.plain_text || null}
                 </h6>
               );
             case 'paragraph':
               return (
-                <p className="text-[18rem]" key={blockIndex}>
+                <p className="text-[18px]" key={blockIndex}>
                   {block.paragraph.text.map((item: any, textIndex: number) => {
                     let classes = [''];
 
@@ -86,7 +84,7 @@ const Notion = ({ post, info }: any) => {
                       classes = [...classes, 'font-bold'];
                     }
                     if (item.annotations.code) {
-                      classes = [...classes, 'bg-[#222] p-[8rem] text-[#fff]'];
+                      classes = [...classes, 'bg-[#222] p-[8px] text-[#fff]'];
                     }
                     if (item.annotations.italic) {
                       classes = [...classes, 'italic'];
@@ -114,7 +112,7 @@ const Notion = ({ post, info }: any) => {
               );
             case 'code':
               return (
-                <code className="p-[8rem] text-[18rem] text-[#fff] bg-[#222]" key={blockIndex}>
+                <code className="p-[8px] text-[18px] text-[#fff] bg-[#222]" key={blockIndex}>
                   {block.code.text[0].plain_text}
                 </code>
               );
@@ -127,13 +125,13 @@ const Notion = ({ post, info }: any) => {
               );
             case 'column_list':
               return (
-                <p className="text-[18rem]" key={blockIndex}>
+                <p className="text-[18px]" key={blockIndex}>
                   複数カラムは非対応です
                 </p>
               );
             default:
               return (
-                <p className="text-[18rem]" key={blockIndex}>
+                <p className="text-[18px]" key={blockIndex}>
                   非対応のブロックです
                 </p>
               );
