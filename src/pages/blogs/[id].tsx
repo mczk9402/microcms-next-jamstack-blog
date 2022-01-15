@@ -104,7 +104,7 @@ export const getStaticPaths = async () => {
 };
 
 // データをテンプレートに受け渡す部分の処理を記述します
-export const getServerSideProps = async (context: any) => {
+export const getStaticProps = async (context: any) => {
   const id = context.params.id;
   const data = await client.get({
     endpoint: 'test',
