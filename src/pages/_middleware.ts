@@ -7,7 +7,7 @@ export function middleware(req: NextRequest) {
     const auth = basicAuth.split(' ')[1];
     const [user, pwd] = Buffer.from(auth, 'base64').toString().split(':');
 
-    if (user === 'hoge' && pwd === 'hogege') {
+    if (user === process.env.NEXT_PUBLIC_LOGIN_USER && pwd === process.env.NEXT_PUBLIC_LOGIN_PASS) {
       return NextResponse.next();
     }
   }
