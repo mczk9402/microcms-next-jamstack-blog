@@ -6,10 +6,10 @@
   .bg-dot {
     background-image: repeating-linear-gradient(
         0deg,
-        rgba(242, 242, 242, 0.25) 0px 1px,
+        rgb(242 242 242/ 0.25) 0px 1px,
         transparent 1px 2px
       ),
-      repeating-linear-gradient(90deg, rgba(242, 242, 242, 0.25) 0px 1px, transparent 1px 2px);
+      repeating-linear-gradient(90deg, rgb(242 242 242/ 0.25) 0px 1px, transparent 1px 2px);
   }
 }
 
