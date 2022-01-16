@@ -5,13 +5,21 @@ import Link from 'next/link';
 import React, { useContext, useEffect, VFC } from 'react';
 import { useState } from 'react';
 import { GlobalContext } from 'context/global';
+import { useRouter } from 'next/router';
 
+// Next.JSでページ遷移する前にbeforeunloadはさみたい時 https://zenn.dev/qaynam/articles/c4794537a163d2
 export const Header: VFC = () => {
   const [open, setOpen] = useState(false);
   const {
     globalState: { siteInfo },
     setGlobalState,
   } = useContext(GlobalContext);
+
+  const onPageChange = () => {
+    setOpen(false);
+  };
+
+  const router = useRouter();
 
   useEffect(() => {
     if (!siteInfo.profileImage.url) {
@@ -24,6 +32,8 @@ export const Header: VFC = () => {
           setGlobalState({ type: 'SET_SITE_INFO', payload: { siteInfo: res } });
         });
     }
+
+    router.events.on('routeChangeStart', onPageChange);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -49,7 +59,7 @@ export const Header: VFC = () => {
         </Link>
         <button
           className="flex justify-center items-center w-[64px] h-full border-r border-l border-[#585858]"
-          onClick={() => setOpen(!open)}
+          onClick={() => setOpen(true)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
