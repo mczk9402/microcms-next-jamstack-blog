@@ -1,13 +1,14 @@
 import React from 'react';
 import { Client } from '@notionhq/client';
 import Image from 'next/image';
+import { Skeleton } from '@chakra-ui/react';
+import { useState } from 'react';
+import { Header } from 'components/Header';
 
 const Notion = ({ post, info }: any) => {
-  const dotsStyle =
-    'repeating-linear-gradient(0deg,rgba(242,242,242,0.25) 0px 1px, transparent 1px 2px),repeating-linear-gradient(90deg,rgba(242,242,242,0.25) 0px 1px, transparent 1px 2px)';
-
   return (
     <div>
+      <Header />
       <div className="grid relative justify-center items-center w-full h-[316px] bg-[#111]/[0.25]">
         {info.cover ? (
           <Image
@@ -17,10 +18,7 @@ const Notion = ({ post, info }: any) => {
             layout="fill"
           />
         ) : null}
-        <div
-          className="absolute top-0 left-0 w-full h-full bg-[#111]/[0.25]"
-          style={{ backgroundImage: dotsStyle }}
-        ></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-[#111]/[0.25] bg-dot"></div>
         <div className="grid relative justify-items-center text-[#fff]">
           <h1 className="text-[50px] font-bold">{info.properties.title.title[0].plain_text}</h1>
           <div className="grid grid-flow-col gap-[16px]">
@@ -117,12 +115,7 @@ const Notion = ({ post, info }: any) => {
                 </code>
               );
             case 'image':
-              return (
-                <div className="relative" key={blockIndex}>
-                  <Image src={block.image.file.url} alt={''} objectFit="cover" layout="fill" />
-                  <div className="pb-[56.25%]"></div>
-                </div>
-              );
+              return <SkeletonImage url={block.image.file.url} key={blockIndex} />;
             case 'column_list':
               return (
                 <p className="text-[18px]" key={blockIndex}>
@@ -143,6 +136,29 @@ const Notion = ({ post, info }: any) => {
 };
 
 export default Notion;
+
+export const SkeletonImage = ({ url }: any) => {
+  const [loading, setLoading] = useState(false);
+
+  return (
+    <div className="relative">
+      <Skeleton className="h-full" isLoaded={loading}>
+        <Image
+          src={url}
+          alt={''}
+          objectFit="cover"
+          layout="fill"
+          onLoadingComplete={() => {
+            setTimeout(() => {
+              setLoading(true);
+            }, 250);
+          }}
+        />
+      </Skeleton>
+      <div className="pb-[56.25%]"></div>
+    </div>
+  );
+};
 
 export const getServerSideProps = async () => {
   const notion = new Client({
