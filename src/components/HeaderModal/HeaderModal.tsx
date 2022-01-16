@@ -1,17 +1,51 @@
 import { Fragment, useRef, useState, VFC } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Link from 'next/link';
-import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons';
+import { useRouter } from 'next/router';
 
 interface Props {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const links = [
+  {
+    name: 'トップ',
+    path: '/',
+  },
+  {
+    name: 'アーカイブ',
+    path: '/archives/1',
+  },
+  {
+    name: 'お問い合わせフォーム',
+    path: '/contact',
+  },
+  {
+    name: 'カテゴリー一覧',
+    path: '/categoryList',
+  },
+  {
+    name: 'React-Slick',
+    path: '/image-list',
+  },
+  {
+    name: 'NotionAPI',
+    path: '/notion',
+  },
+];
+
 export const HeaderModal: VFC<Props> = ({ open, setOpen }) => {
   const [search, setSearch] = useState('');
   const cancelButtonRef = useRef(null);
+  const router = useRouter();
+  const onPageLoad = (e: any) => {
+    e.preventDefault();
+    setOpen(false);
+    setTimeout(() => {
+      router.push(e.target.href);
+    }, 200);
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -49,36 +83,13 @@ export const HeaderModal: VFC<Props> = ({ open, setOpen }) => {
           >
             <div className="inline-block overflow-hidden relative p-[30px] h-[600px] text-left text-white align-bottom bg-black/70 rounded-lg shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:align-middle">
               <ul className="grid gap-[16px]">
-                <li>
-                  <Link href="/">
-                    <a>TOP</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/archives/1">
-                    <a>アーカイブ</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact">
-                    <a>お問い合わせ</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/categoryList">
-                    <a>カテゴリー一覧</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/image-list">
-                    <a>スライダー検証</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/notion">
-                    <a>notion</a>
-                  </Link>
-                </li>
+                {links.map((link, index) => (
+                  <li key={index}>
+                    <Link href={link.path}>
+                      <a onClick={onPageLoad}>{link.name}</a>
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </Transition.Child>
