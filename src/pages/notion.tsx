@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { Header } from 'components/Header';
 
 const Notion = ({ post, info }: any) => {
+  console.log(post);
+
   return (
     <div>
       <Header />
@@ -39,19 +41,19 @@ const Notion = ({ post, info }: any) => {
             case 'heading_1':
               return (
                 <h1 className="text-[40px] font-bold" key={blockIndex}>
-                  {block.heading_1.text[0]?.plain_text || null}
+                  <IterateCreateElement blockTypeText={block.heading_1.text} />
                 </h1>
               );
             case 'heading_2':
               return (
                 <h2 className="text-[36px] font-bold" key={blockIndex}>
-                  {block.heading_2.text[0]?.plain_text || null}
+                  <IterateCreateElement blockTypeText={block.heading_2.text} />
                 </h2>
               );
             case 'heading_3':
               return (
                 <h3 className="text-[32px] font-bold" key={blockIndex}>
-                  {block.heading_3.text[0]?.plain_text || null}
+                  <IterateCreateElement blockTypeText={block.heading_3.text} />
                 </h3>
               );
             case 'heading_4':
@@ -75,37 +77,7 @@ const Notion = ({ post, info }: any) => {
             case 'paragraph':
               return (
                 <p className="text-[18px]" key={blockIndex}>
-                  {block.paragraph.text.map((item: any, textIndex: number) => {
-                    let classes = [''];
-
-                    if (item.annotations.bold) {
-                      classes = [...classes, 'font-bold'];
-                    }
-                    if (item.annotations.code) {
-                      classes = [...classes, 'bg-[#222] p-[8px] text-[#fff]'];
-                    }
-                    if (item.annotations.italic) {
-                      classes = [...classes, 'italic'];
-                    }
-                    if (item.annotations.strikethrough) {
-                      classes = [...classes, 'line-through'];
-                    }
-                    if (item.annotations.underline) {
-                      classes = [...classes, 'underline'];
-                    }
-
-                    return (
-                      <span
-                        className={classes.join(' ')}
-                        style={{
-                          color: item.annotations.color,
-                        }}
-                        key={textIndex}
-                      >
-                        {item.plain_text}
-                      </span>
-                    );
-                  })}
+                  <IterateCreateElement blockTypeText={block.paragraph.text} />
                 </p>
               );
             case 'code':
@@ -157,6 +129,61 @@ export const SkeletonImage = ({ url }: any) => {
       </Skeleton>
       <div className="pb-[56.25%]"></div>
     </div>
+  );
+};
+
+export const IterateCreateElement = ({ blockTypeText }: any) => {
+  return (
+    <>
+      {blockTypeText.map((item: any, textIndex: number) => {
+        let classes = [''];
+
+        if (item.annotations.bold) {
+          classes = [...classes, 'font-bold'];
+        }
+        if (item.annotations.code) {
+          classes = [...classes, 'bg-[#222] p-[8px] text-[#fff]'];
+        }
+        if (item.annotations.italic) {
+          classes = [...classes, 'italic'];
+        }
+        if (item.annotations.strikethrough) {
+          classes = [...classes, 'line-through'];
+        }
+        if (item.annotations.underline) {
+          classes = [...classes, 'underline'];
+        }
+
+        if (item.href != undefined) {
+          return (
+            <a
+              className={classes.join(' ') + 'underline'}
+              style={{
+                color: item.annotations.color,
+              }}
+              href={item.href}
+              target={'_blank'}
+              rel="noreferrer"
+              key={textIndex}
+            >
+              {item.plain_text}
+            </a>
+          );
+        }
+
+        return (
+          <span
+            className={classes.join(' ')}
+            style={{
+              color: item.annotations.color,
+            }}
+            key={textIndex}
+          >
+            {item.plain_text}
+          </span>
+        );
+      })}
+    </>
   );
 };
 
