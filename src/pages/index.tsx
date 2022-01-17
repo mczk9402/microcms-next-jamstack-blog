@@ -4,6 +4,8 @@ import { Pagination } from 'components/Pagination';
 import { Layout } from 'components/Layout';
 import { Heading1, Heading2 } from 'components/Heading';
 import { VFC } from 'react';
+import * as gtag from 'libs/gtag';
+import { Button } from '@chakra-ui/react';
 
 interface StaticProps {
   blog: {
@@ -53,12 +55,28 @@ const Home: VFC<StaticProps> = ({ blog, totalCount, siteInfo }) => {
   // slice(どこから,どこまで)を返す
   const latestBlog = blog.slice(0, 8);
 
+  const onClickPVcount = () => {
+    gtag.event({
+      action: 'click_event',
+      category: 'link_button',
+      label: 'event',
+    });
+  };
+
   return (
     <Layout mainVisual={mainVisual}>
       <Heading1 title={title} description={description} />
       <Heading2 title={'記事一覧'} />
       <PostList blog={latestBlog} />
       <Pagination totalCount={totalCount} />
+      <Button
+        className="mt-[64px] w-full"
+        colorScheme={'teal'}
+        variant={'outline'}
+        onClick={onClickPVcount}
+      >
+        PVカウントボタン
+      </Button>
     </Layout>
   );
 };
