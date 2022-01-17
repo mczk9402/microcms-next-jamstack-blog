@@ -1,4 +1,3 @@
-import React from 'react';
 import { Client } from '@notionhq/client';
 import Image from 'next/image';
 import { Skeleton } from '@chakra-ui/react';
@@ -6,8 +5,6 @@ import { useState } from 'react';
 import { Header } from 'components/Header';
 
 const Notion = ({ post, info }: any) => {
-  console.log(post);
-
   return (
     <div>
       <Header />
@@ -114,7 +111,7 @@ export const SkeletonImage = ({ url }: any) => {
 
   return (
     <div className="relative">
-      <Skeleton className="h-full" isLoaded={loading}>
+      <Skeleton className="absolute top-0 left-0 w-full h-full" isLoaded={loading}>
         <Image
           src={url}
           alt={''}
