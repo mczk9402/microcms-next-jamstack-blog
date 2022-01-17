@@ -6,6 +6,7 @@ import { Heading1, Heading2 } from 'components/Heading';
 import { VFC } from 'react';
 import * as gtag from 'libs/gtag';
 import { Button } from '@chakra-ui/react';
+import Link from 'next/link';
 
 interface StaticProps {
   blog: {
@@ -69,14 +70,18 @@ const Home: VFC<StaticProps> = ({ blog, totalCount, siteInfo }) => {
       <Heading2 title={'記事一覧'} />
       <PostList blog={latestBlog} />
       <Pagination totalCount={totalCount} />
-      <Button
-        className="mt-[64px] w-full"
-        colorScheme={'teal'}
-        variant={'outline'}
-        onClick={onClickPVcount}
-      >
-        PVカウントボタン
-      </Button>
+      <Link href={'/contact'}>
+        <a>
+          <Button
+            className="mt-[64px] w-full"
+            colorScheme={'teal'}
+            variant={'outline'}
+            onClick={onClickPVcount}
+          >
+            PVカウントボタン
+          </Button>
+        </a>
+      </Link>
     </Layout>
   );
 };
