@@ -33,6 +33,10 @@ const links = [
     name: 'NotionAPI',
     path: '/notion',
   },
+  {
+    name: 'formお試し',
+    path: '/form',
+  },
 ];
 
 export const HeaderModal: VFC<Props> = ({ open, setOpen }) => {
@@ -86,7 +90,9 @@ export const HeaderModal: VFC<Props> = ({ open, setOpen }) => {
                 {links.map((link, index) => (
                   <li key={index}>
                     <Link href={link.path}>
-                      <a onClick={onPageLoad}>{link.name}</a>
+                      <a onClick={onPageLoad} className="text-[#fff]">
+                        {link.name}
+                      </a>
                     </Link>
                   </li>
                 ))}

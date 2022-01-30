@@ -15,6 +15,11 @@
   }
 }
 
+/* オートコンプリートでinputの背景色が変わるのを防ぐ */
+input:-webkit-autofill {
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
 /* @media print, screen and (min-width: 375px) {
   html {
     font-size: calc((1rem + ((1vw - 3.75px) * 0.8163)) / 1.6);

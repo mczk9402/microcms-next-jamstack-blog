@@ -5,6 +5,7 @@ import { AppProps } from 'next/dist/shared/lib/router/router';
 import { GoogleAnalytics, existsGaId, pageview } from 'libs/gtag';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { NextUIProvider } from '@nextui-org/react';
 
 // https://de-milestones.com/nextjs_typescript_app-tsx_myapp/
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
@@ -23,12 +24,14 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
   }, [router.events]);
 
   return (
-    <ChakraProvider>
-      <GlobalProvider>
-        <GoogleAnalytics />
-        <Component {...pageProps} />
-      </GlobalProvider>
-    </ChakraProvider>
+    <NextUIProvider>
+      <ChakraProvider>
+        <GlobalProvider>
+          <GoogleAnalytics />
+          <Component {...pageProps} />
+        </GlobalProvider>
+      </ChakraProvider>
+    </NextUIProvider>
   );
 };
 
